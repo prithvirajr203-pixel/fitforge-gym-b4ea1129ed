@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FitForge Gym - Elite Fitness & Training</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Chart.js for Progress Tracking Dashboard -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{
+  --primary-bg: #0d0f12;
+  --card-bg: #161920;
+  --card-hover: #1f242e;
+  --accent: #ff6600;
+  --accent-hover: #e55e00;
+  --accent-light: rgba(255, 102, 0, 0.15);
+  --neutral: #ffffff;
+  --text-light: #e0e6ed;
+  --text-muted: #94a3b8;
+  --border-color: #2a2f3d;
+  --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  font-family: var(--font-main);
+  color: var(--text-light);
+  background: var(--primary-bg);
+  line-height: 1.6;
+}
+
+a{
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover{
+  color: var(--accent-hover);
+}
+
+/* Header & Navigation */
+header{
+  background: rgba(13, 15, 18, 0.95);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container{
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+}
+
+.logo{
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--neutral);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo span{
+  color: var(--accent);
+}
+
+header nav{
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+header nav a{
+  color: var(--text-light);
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+header nav a:hover{
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.nav-toggle{
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 1001;
+}
+
+.nav-toggle span{
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--neutral);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Common Section Styles */
+section{
+  padding: 5rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header{
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2{
+  font-size: 2.25rem;
+  color: var(--neutral);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.section-header p{
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.btn{
+  display: inline-block;
+  padding: 0.85rem 1.75rem;
+  background: var(--accent);
+  color: var(--neutral);
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.25);
+}
+
+.btn:hover{
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 102, 0, 0.35);
+  color: var(--neutral);
+}
+
+.btn-secondary{
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  box-shadow: none;
+}
+
+.btn-secondary:hover{
+  background: var(--accent);
+  color: var(--neutral);
+}
+
+/* Hero Section */
+.hero-wrapper{
+  background: linear-gradient(180deg, rgba(13,15,18,0.4) 0%, rgba(13,15,18,1) 100%), 
+              radial-gradient(circle at center, rgba(255,102,0,0.15) 0%, transparent 70%),
+              url('https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&h=1080&w=1920') center/cover no-repeat;
+  width: 100%;
+}
+
+.hero{
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-content{
+  max-width: 800px;
+}
+
+.hero h1{
+  font-size: 3.5rem;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+  color: var(--neutral);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.hero p{
+  font-size: 1.35rem;
+  color: #cbd5e1;
+  margin-bottom: 2rem;
+}
+
+.hero-btns{
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* About Section */
+.about{
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.about-img-wrap{
+  flex: 1;
+  position: relative;
+}
+
+.about img{
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid var(--border-color);
+}
+
+.about .text{
+  flex: 1;
+}
+
+.about h2{
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+  color: var(--neutral);
+}
+
+.about p{
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Facilities Carousel */
+.facilities-container{
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.carousel-wrap{
+  position: relative;
+}
+
+.carousel{
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+}
+
+.carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.carousel::-webkit-scrollbar-track {
+  background: var(--primary-bg);
+  border-radius: 4px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+.facility-card{
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+  background: var(--primary-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.facility-card img{
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.facility-card-info{
+  padding: 1rem;
+}
+
+.facility-card-info h3{
+  font-size: 1.15rem;
+  color: var(--neutral);
+  margin-bottom: 0.25rem;
+}
+
+.facility-card-info p{
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Programs & Cards */
+.cards-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.program-card, .class-card, .trainer-card{
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.program-card:hover, .class-card:hover, .trainer-card:hover{
+  transform: translateY(-6px);
+  border-color: var(--accent);
+}
+
+.program-card img, .class-card img{
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.program-card .content, .class-card .content{
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.program-card h3, .class-card h3{
+  color: var(--neutral);
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.program-card p, .class-card p{
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+/* Trainers Showcase */
+.trainer-card{
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+.trainer-card img{
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1.25rem;
+  border: 3px solid var(--accent);
+}
+
+.trainer-card h3{
+  color: var(--neutral);
+  font-size: 1.25rem;
+}
+
+.trainer-card .role{
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.trainer-card p{
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Membership Plans Table / Cards */
+.membership_plans{
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.table-responsive{
+  overflow-x: auto;
+}
+
+.membership_plans table{
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--neutral);
+  text-align: left;
+}
+
+.membership_plans th, .membership_plans td{
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.membership_plans th{
+  background: rgba(255, 102, 0, 0.1);
+  color: var(--accent);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+.membership_plans td.price{
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Interactive Weekly Calendar */
+.calendar-controls{
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn{
+  padding: 0.5rem 1.25rem;
+  background: var(--card-bg);
+  color: var(--text-light);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.filter-btn.active, .filter-btn:hover{
+  background: var(--accent);
+  color: var(--neutral);
+  border-color: var(--accent);
+}
+
+.calendar-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.calendar-day{
+  background: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+}
+
+.day-header{
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0.75rem;
+  font-size: 1.05rem;
+}
+
+.slot-item{
+  background: var(--primary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.6rem;
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slot-item:hover{
+  border-color: var(--accent);
+  background: rgba(255, 102, 0, 0.08);
+}
+
+.slot-time{
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.slot-title{
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--neutral);
+  margin: 0.2rem 0;
+}
+
+.slot-trainer{
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+/* Workout Plans & Progress Dashboard */
+.dashboard-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.dashboard-card{
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.dashboard-card h3{
+  color: var(--neutral);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chart-container{
+  position: relative;
+  height: 250px;
+  width: 100%;
+}
+
+.metric-logger{
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.metric-logger input{
+  flex: 1;
+  padding: 0.6rem;
+  background: var(--primary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--neutral);
+}
+
+/* Nutrition Macro Calculator */
+.macro-calc-box{
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.form-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-group label{
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.form-group input, .form-group select, .form-group textarea{
+  padding: 0.75rem;
+  background: var(--primary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--neutral);
+  font-size: 1rem;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+}
+
+.macro-results{
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.macro-res-card{
+  background: var(--primary-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+}
+
+.macro-res-card .val{
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.macro-res-card .lbl{
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Photo Gallery Section */
+.gallery-filters{
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.gallery-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.gallery-item{
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 220px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+}
+
+.gallery-item img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img{
+  transform: scale(1.08);
+}
+
+.gallery-overlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+}
+
+.gallery-item:hover .gallery-overlay{
+  opacity: 1;
+}
+
+.gallery-overlay h4{
+  color: var(--neutral);
+  font-size: 1rem;
+}
+
+/* Lightbox Modal */
+.lightbox{
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.lightbox.active{
+  display: flex;
+}
+
+.lightbox-content{
+  max-width: 900px;
+  max-height: 80vh;
+  border-radius: 8px;
+}
+
+.lightbox-close{
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+/* Testimonials Carousel */
+.testimonials-box{
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  border: 1px solid var(--border-color);
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.testimonial{
+  display: none;
+}
+
+.testimonial.active{
+  display: block;
+}
+
+.testimonial img{
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1.25rem;
+  border: 3px solid var(--accent);
+}
+
+.testimonial p{
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #cbd5e1;
+  margin-bottom: 1.25rem;
+}
+
+.testimonial h4{
+  color: var(--neutral);
+  font-size: 1.1rem;
+}
+
+.testimonial-nav{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Booking & Contact Section */
+.contact-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+.map-card{
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.map-card iframe{
+  width: 100%;
+  height: 250px;
+  border: none;
+}
+
+.contact-details{
+  padding: 1.5rem;
+}
+
+.contact-details h3{
+  color: var(--neutral);
+  margin-bottom: 0.75rem;
+}
+
+.contact-details p{
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* FAQ Accordion */
+.faq-accordion{
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item{
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.faq-item button{
+  width: 100%;
+  text-align: left;
+  padding: 1.25rem;
+  background: transparent;
+  color: var(--neutral);
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-item button::after{
+  content: '+';
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.faq-item button.active::after{
+  content: '−';
+}
+
+.faq-content{
+  display: none;
+  padding: 0 1.25rem 1.25rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Statistics Section */
+.stats-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card{
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  border: 1px solid var(--border-color);
+}
+
+.stat-number{
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label{
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Sticky Primary CTA Banner */
+.primary_cta{
+  background: linear-gradient(90deg, #ff6600, #e55e00);
+  color: var(--neutral);
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  border-radius: 12px;
+  max-width: 1200px;
+  margin: 3rem auto;
+}
+
+.primary_cta h2{
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.primary_cta p{
+  font-size: 1.15rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.95;
+}
+
+.primary_cta .btn{
+  background: var(--neutral);
+  color: var(--accent);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.primary_cta .btn:hover{
+  background: #f8fafc;
+  color: var(--accent-hover);
+}
+
+/* User Dashboard Summary */
+.user-dashboard-card{
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* Footer */
+footer{
+  background: #08090b;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-muted);
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 992px){
+  .about{
+    flex-direction: column;
+  }
+  .contact-container{
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px){
+  header nav{
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: var(--primary-bg);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    transform: translateY(-150%);
+    transition: transform 0.3s ease;
+    z-index: 999;
+  }
+
+  header nav.active{
+    transform: translateY(0);
+  }
+
+  .nav-toggle{
+    display: flex;
+  }
+
+  .hero h1{
+    font-size: 2.5rem;
+  }
+
+  .form-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px){
+  .calendar-grid{
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <a href="#" class="logo">Fit<span>Forge</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav id="navMenu">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#facilities">Facilities</a>
+      <a href="#programs_overview">Programs</a>
+      <a href="#trainers_showcase">Trainers</a>
+      <a href="#membership_plans">Plans</a>
+      <a href="#schedule_calendar">Schedule</a>
+      <a href="#progress_tracking">Progress</a>
+      <a href="#nutrition_section">Nutrition</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#booking_form">Book</a>
+      <a href="#contact_info">Contact</a>
+      <a href="#faq_accordion">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-wrapper" id="hero">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Forge Your Ultimate Strength & Fitness</h1>
+      <p>State-of-the-art facilities, certified expert trainers, and a powerful community built to achieve lasting athletic results.</p>
+      <div class="hero-btns">
+        <a href="#membership_plans" class="btn">Join Now</a>
+        <a href="#schedule_calendar" class="btn btn-secondary">View Schedule</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section id="about" class="about">
+  <div class="about-img-wrap">
+    <img src="https://images.pexels.com/photos/32695899/pexels-photo-32695899.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="FitForge Gym Community">
+  </div>
+  <div class="text">
+    <h2>Our Mission: Empower Every Athlete</h2>
+    <p>At FitForge, we blend science-backed training methods with a high-energy supportive environment. Whether you are an elite competitor or taking your first steps into fitness, our gym is engineered to optimize your physical potential.</p>
+    <a href="#booking_form" class="btn">Start Free Trial</a>
+  </div>
+</section>
+
+<section id="facilities">
+  <div class="section-header">
+    <h2>World-Class Facilities</h2>
+    <p>Premium Olympic barbells, high-performance cardio suites, functional turf zones, and recovery spaces.</p>
+  </div>
+  <div class="facilities-container">
+    <div class="carousel" id="facilityCarousel">
+      <div class="facility-card">
+        <img src="https://images.pexels.com/photos/4716814/pexels-photo-4716814.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Free Weights Area">
+        <div class="facility-card-info">
+          <h3>Heavy Weight Zone</h3>
+          <p>Olympic racks, power platforms, and dumbbells up to 150 lbs.</p>
+        </div>
+      </div>
+      <div class="facility-card">
+        <img src="https://images.pexels.com/photos/2261477/pexels-photo-2261477.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Cardio Deck">
+        <div class="facility-card-info">
+          <h3>Cardio Performance Deck</h3>
+          <p>Smart treadmills, rowers, SkiErgs, and Assault bikes.</p>
+        </div>
+      </div>
+      <div class="facility-card">
+        <img src="https://images.pexels.com/photos/3823039/pexels-photo-3823039.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Functional Turf Zone">
+        <div class="facility-card-info">
+          <h3>Functional Turf Zone</h3>
+          <p>Sled tracks, kettlebells, plyo boxes, and battle ropes.</p>
+        </div>
+      </div>
+      <div class="facility-card">
+        <img src="https://images.pexels.com/photos/3822677/pexels-photo-3822677.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Yoga & Recovery Studio">
+        <div class="facility-card-info">
+          <h3>Mind & Recovery Studio</h3>
+          <p>Heated flooring for yoga, mobility work, and post-workout recovery.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="programs_overview">
+  <div class="section-header">
+    <h2>Core Training Programs</h2>
+    <p>Targeted training pathways engineered for maximum hypertrophy, endurance, and strength output.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="program-card">
+      <img src="https://images.pexels.com/photos/6046983/pexels-photo-6046983.png?auto=compress&cs=tinysrgb&h=650&w=940" alt="Strength Training">
+      <div class="content">
+        <h3>Power & Strength</h3>
+        <p>Progressive overload resistance training structured for powerlifting and muscle building.</p>
+        <a href="#booking_form" class="btn">Explore Program</a>
+      </div>
+    </div>
+    <div class="program-card">
+      <img src="https://images.pexels.com/photos/20418606/pexels-photo-20418606.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Cardio Blast">
+      <div class="content">
+        <h3>Cardio Blast & Conditioning</h3>
+        <p>Targeted aerobic and anaerobic sessions designed to elevate VO2 max and stamina.</p>
+        <a href="#booking_form" class="btn">Explore Program</a>
+      </div>
+    </div>
+    <div class="program-card">
+      <img src="https://images.pexels.com/photos/39219682/pexels-photo-39219682.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="HIIT Fusion">
+      <div class="content">
+        <h3>HIIT Fusion Circuit</h3>
+        <p>High-tempo functional interval training combining bodyweight conditioning and plyometrics.</p>
+        <a href="#booking_form" class="btn">Explore Program</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trainers_showcase">
+  <div class="section-header">
+    <h2>Meet Our Elite Coaches</h2>
+    <p>Certified strength & conditioning specialists committed to keeping you accountable and progressing safely.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="trainer-card">
+      <img src="https://images.pexels.com/photos/4853657/pexels-photo-4853657.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Alex Rivera">
+      <h3>Alex Rivera</h3>
+      <div class="role">Head Strength Coach</div>
+      <p>Specializes in powerlifting biomechanics and compound lift optimization with 10+ years coaching.</p>
+      <a href="#booking_form" class="btn">Book Session</a>
+    </div>
+    <div class="trainer-card">
+      <img src="https://images.pexels.com/photos/3984354/pexels-photo-3984354.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Maya Patel">
+      <h3>Maya Patel</h3>
+      <div class="role">Yoga & Mobility Lead</div>
+      <p>Expert in active recovery, joint longevity, dynamic flow, and injury rehab protocols.</p>
+      <a href="#booking_form" class="btn">Book Session</a>
+    </div>
+    <div class="trainer-card">
+      <img src="https://images.pexels.com/photos/24809803/pexels-photo-24809803.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Jamal Thompson">
+      <h3>Jamal Thompson</h3>
+      <div class="role">HIIT & Athletic Conditioning</div>
+      <p>Former collegiate sprinter focusing on explosive athletic performance and endurance conditioning.</p>
+      <a href="#booking_form" class="btn">Book Session</a>
+    </div>
+  </div>
+</section>
+
+<section id="membership_plans">
+  <div class="section-header">
+    <h2>Flexible Membership Tiers</h2>
+    <p>Simple, transparent pricing with no lock-in contracts. Select the pass that suits your ambition.</p>
+  </div>
+  <div class="membership_plans">
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Plan Tier</th>
+            <th>Monthly Price</th>
+            <th>Facility Access</th>
+            <th>Group Classes</th>
+            <th>Personal Coaching</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Basic Pass</strong></td>
+            <td class="price">$29/mo</td>
+            <td>Full Gym Floor Access</td>
+            <td>1 Class / Week</td>
+            <td>—</td>
+            <td><a href="#booking_form" class="btn">Choose Basic</a></td>
+          </tr>
+          <tr>
+            <td><strong>Premium Athlete</strong></td>
+            <td class="price">$59/mo</td>
+            <td>24/7 All-Zone Access</td>
+            <td>Unlimited Classes</td>
+            <td>Free Nutrition Plan</td>
+            <td><a href="#booking_form" class="btn">Choose Premium</a></td>
+          </tr>
+          <tr>
+            <td><strong>VIP Elite</strong></td>
+            <td class="price">$99/mo</td>
+            <td>24/7 Priority Access</td>
+            <td>Unlimited + Guest Passes</td>
+            <td>1 Personal Session / Month</td>
+            <td><a href="#booking_form" class="btn">Choose VIP</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="classes_grid">
+  <div class="section-header">
+    <h2>Featured Group Classes</h2>
+    <p>Energetic group workouts engineered to push limits and build team spirit.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="class-card">
+      <img src="https://images.pexels.com/photos/8436610/pexels-photo-8436610.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Yoga Flow">
+      <div class="content">
+        <h3>Power Yoga Flow</h3>
+        <p>Mon & Wed | 07:00 AM - 08:00 AM</p>
+        <a href="#schedule_calendar" class="btn">View Schedule</a>
+      </div>
+    </div>
+    <div class="class-card">
+      <img src="https://images.pexels.com/photos/38882512/pexels-photo-38882512.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Spin Cycle">
+      <div class="content">
+        <h3>High-RPM Spin Cycle</h3>
+        <p>Tue & Thu | 06:00 PM - 07:00 PM</p>
+        <a href="#schedule_calendar" class="btn">View Schedule</a>
+      </div>
+    </div>
+    <div class="class-card">
+      <img src="https://images.pexels.com/photos/4720796/pexels-photo-4720796.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="CrossFit Challenge">
+      <div class="content">
+        <h3>CrossFit Challenge</h3>
+        <p>Sat | 09:00 AM - 10:30 AM</p>
+        <a href="#schedule_calendar" class="btn">View Schedule</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="schedule_calendar">
+  <div class="section-header">
+    <h2>Interactive Weekly Schedule</h2>
+    <p>Filter by discipline or trainer to reserve your slot in real-time.</p>
+  </div>
+  
+  <div class="calendar-controls">
+    <button class="filter-btn active" data-filter="all">All Classes</button>
+    <button class="filter-btn" data-filter="strength">Strength</button>
+    <button class="filter-btn" data-filter="hiit">HIIT</button>
+    <button class="filter-btn" data-filter="yoga">Yoga</button>
+    <button class="filter-btn" data-filter="spin">Spin</button>
+  </div>
+
+  <div class="calendar-grid" id="calendarGrid">
+    <!-- Monday -->
+    <div class="calendar-day">
+      <div class="day-header">Mon</div>
+      <div class="slot-item" data-category="yoga" onclick="selectSlot('Power Yoga Flow', 'Maya Patel', 'Mon 07:00 AM')">
+        <div class="slot-time">07:00 AM</div>
+        <div class="slot-title">Power Yoga Flow</div>
+        <div class="slot-trainer">Coach Maya</div>
+      </div>
+      <div class="slot-item" data-category="strength" onclick="selectSlot('Heavy Compound Lifts', 'Alex Rivera', 'Mon 05:00 PM')">
+        <div class="slot-time">05:00 PM</div>
+        <div class="slot-title">Heavy Lifts</div>
+        <div class="slot-trainer">Coach Alex</div>
+      </div>
+    </div>
+    <!-- Tuesday -->
+    <div class="calendar-day">
+      <div class="day-header">Tue</div>
+      <div class="slot-item" data-category="hiit" onclick="selectSlot('Morning HIIT Burn', 'Jamal Thompson', 'Tue 08:00 AM')">
+        <div class="slot-time">08:00 AM</div>
+        <div class="slot-title">HIIT Burn</div>
+        <div class="slot-trainer">Coach Jamal</div>
+      </div>
+      <div class="slot-item" data-category="spin" onclick="selectSlot('RPM Spin Cycle', 'Maya Patel', 'Tue 06:00 PM')">
+        <div class="slot-time">06:00 PM</div>
+        <div class="slot-title">RPM Spin</div>
+        <div class="slot-trainer">Coach Maya</div>
+      </div>
+    </div>
+    <!-- Wednesday -->
+    <div class="calendar-day">
+      <div class="day-header">Wed</div>
+      <div class="slot-item" data-category="yoga" onclick="selectSlot('Vinyasa Recovery', 'Maya Patel', 'Wed 07:00 AM')">
+        <div class="slot-time">07:00 AM</div>
+        <div class="slot-title">Vinyasa Flow</div>
+        <div class="slot-trainer">Coach Maya</div>
+      </div>
+      <div class="slot-item" data-category="strength" onclick="selectSlot('Hypertrophy Arms & Chest', 'Alex Rivera', 'Wed 06:00 PM')">
+        <div class="slot-time">06:00 PM</div>
+        <div class="slot-title">Hypertrophy</div>
+        <div class="slot-trainer">Coach Alex</div>
+      </div>
+    </div>
+    <!-- Thursday -->
+    <div class="calendar-day">
+      <div class="day-header">Thu</div>
+      <div class="slot-item" data-category="hiit" onclick="selectSlot('Tabata Conditioning', 'Jamal Thompson', 'Thu 08:00 AM')">
+        <div class="slot-time">08:00 AM</div>
+        <div class="slot-title">Tabata Blast</div>
+        <div class="slot-trainer">Coach Jamal</div>
+      </div>
+      <div class="slot-item" data-category="spin" onclick="selectSlot('Sprints & Hills Spin', 'Maya Patel', 'Thu 06:00 PM')">
+        <div class="slot-time">06:00 PM</div>
+        <div class="slot-title">Sprint Spin</div>
+        <div class="slot-trainer">Coach Maya</div>
+      </div>
+    </div>
+    <!-- Friday -->
+    <div class="calendar-day">
+      <div class="day-header">Fri</div>
+      <div class="slot-item" data-category="strength" onclick="selectSlot('Deadlift & Squat Lab', 'Alex Rivera', 'Fri 05:00 PM')">
+        <div class="slot-time">05:00 PM</div>
+        <div class="slot-title">Squat & Deadlift</div>
+        <div class="slot-trainer">Coach Alex</div>
+      </div>
+      <div class="slot-item" data-category="hiit" onclick="selectSlot('Friday Night Shred', 'Jamal Thompson', 'Fri 06:30 PM')">
+        <div class="slot-time">06:30 PM</div>
+        <div class="slot-title">Friday Shred</div>
+        <div class="slot-trainer">Coach Jamal</div>
+      </div>
+    </div>
+    <!-- Saturday -->
+    <div class="calendar-day">
+      <div class="day-header">Sat</div>
+      <div class="slot-item" data-category="hiit" onclick="selectSlot('CrossFit Challenge', 'Alex Rivera', 'Sat 09:00 AM')">
+        <div class="slot-time">09:00 AM</div>
+        <div class="slot-title">CrossFit Challenge</div>
+        <div class="slot-trainer">Coach Alex</div>
+      </div>
+    </div>
+    <!-- Sunday -->
+    <div class="calendar-day">
+      <div class="day-header">Sun</div>
+      <div class="slot-item" data-category="yoga" onclick="selectSlot('Mobility & Restorative Yoga', 'Maya Patel', 'Sun 10:00 AM')">
+        <div class="slot-time">10:00 AM</div>
+        <div class="slot-title">Restorative Yoga</div>
+        <div class="slot-trainer">Coach Maya</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="workout_plans">
+  <div class="section-header">
+    <h2>Free Sample Workout Plans</h2>
+    <p>Download proven routines engineered for fat loss, strength gain, and core conditioning.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="dashboard-card">
+      <h3>5-Day Hypertrophy Split</h3>
+      <p style="color:var(--text-muted); margin-bottom: 1rem;">Targeted push/pull/legs routine designed for maximal muscle hypertrophy.</p>
+      <button class="btn" onclick="alert('Downloading 5-Day Hypertrophy Split PDF...')">Download PDF Plan</button>
+    </div>
+    <div class="dashboard-card">
+      <h3>4-Week HIIT Torch</h3>
+      <p style="color:var(--text-muted); margin-bottom: 1rem;">High-intensity bodyweight and kettlebell circuit to strip body fat fast.</p>
+      <button class="btn" onclick="alert('Downloading 4-Week HIIT Torch PDF...')">Download PDF Plan</button>
+    </div>
+    <div class="dashboard-card">
+      <h3>Mobility & Joint Health</h3>
+      <p style="color:var(--text-muted); margin-bottom: 1rem;">Daily 15-minute mobility routine to eliminate stiffness and improve lifts.</p>
+      <button class="btn" onclick="alert('Downloading Mobility Plan PDF...')">Download PDF Plan</button>
+    </div>
+  </div>
+</section>
+
+<section id="progress_tracking">
+  <div class="section-header">
+    <h2>Progress Tracking Dashboard</h2>
+    <p>Log workouts, track your weight loss, and visualize real-time performance gains.</p>
+  </div>
+  
+  <div class="dashboard-grid">
+    <div class="dashboard-card">
+      <h3>Weight Progress (lbs)</h3>
+      <div class="chart-container">
+        <canvas id="weightChart"></canvas>
+      </div>
+      <div class="metric-logger">
+        <input type="number" id="newWeightInput" placeholder="Enter new weight (lbs)">
+        <button class="btn" onclick="addWeightLog()">Log</button>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>Weekly Workout Consistency</h3>
+      <div class="chart-container">
+        <canvas id="workoutChart"></canvas>
+      </div>
+      <div class="metric-logger">
+        <input type="text" id="workoutNameInput" placeholder="Session details (e.g., Legs)">
+        <button class="btn" onclick="logSession()">Log Session</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nutrition_section">
+  <div class="section-header">
+    <h2>Interactive Macro & Nutrition Calculator</h2>
+    <p>Fuel your transformation with precise daily target calories and macronutrient breakdown.</p>
+  </div>
+
+  <div class="macro-calc-box">
+    <form id="macroForm" onsubmit="calculateMacros(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="calcWeight">Weight (lbs)</label>
+          <input type="number" id="calcWeight" required value="175">
+        </div>
+        <div class="form-group">
+          <label for="calcHeight">Height (inches)</label>
+          <input type="number" id="calcHeight" required value="70">
+        </div>
+        <div class="form-group">
+          <label for="calcGoal">Fitness Goal</label>
+          <select id="calcGoal">
+            <option value="lose">Fat Loss & Toning</option>
+            <option value="maintain" selected>Maintain Weight</option>
+            <option value="gain">Muscle Gain / Bulking</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="calcActivity">Activity Level</label>
+          <select id="calcActivity">
+            <option value="1.2">Sedentary (Desk Job)</option>
+            <option value="1.4" selected>Moderate (3-4 workouts/wk)</option>
+            <option value="1.6">Active (5+ intense workouts/wk)</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn" style="width:100%;">Calculate Macro Targets</button>
+    </form>
+
+    <div class="macro-results" id="macroResults">
+      <div class="macro-res-card">
+        <div class="val" id="resCalories">0</div>
+        <div class="lbl">Daily Calories</div>
+      </div>
+      <div class="macro-res-card">
+        <div class="val" id="resProtein">0g</div>
+        <div class="lbl">Protein Target</div>
+      </div>
+      <div class="macro-res-card">
+        <div class="val" id="resCarbs">0g</div>
+        <div class="lbl">Carbs Target</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="section-header">
+    <h2>Gym Action Gallery</h2>
+    <p>Take a virtual tour of our high-energy atmosphere, facilities, and member transformations.</p>
+  </div>
+
+  <div class="gallery-filters">
+    <button class="filter-btn active" onclick="filterGallery('all')">All Photos</button>
+    <button class="filter-btn" onclick="filterGallery('facility')">Facilities</button>
+    <button class="filter-btn" onclick="filterGallery('action')">Workouts</button>
+    <button class="filter-btn" onclick="filterGallery('transform')">Transformations</button>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item" data-cat="facility" onclick="openLightbox('https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&h=1080&w=1920', 'Main Training Floor')">
+      <img src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Training Floor">
+      <div class="gallery-overlay"><h4>Main Training Floor</h4></div>
+    </div>
+    <div class="gallery-item" data-cat="action" onclick="openLightbox('https://images.pexels.com/photos/8436610/pexels-photo-8436610.jpeg?auto=compress&cs=tinysrgb&h=1080&w=1920', 'Group Power Yoga Session')">
+      <img src="https://images.pexels.com/photos/8436610/pexels-photo-8436610.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Yoga Group">
+      <div class="gallery-overlay"><h4>Power Yoga Studio</h4></div>
+    </div>
+    <div class="gallery-item" data-cat="action" onclick="openLightbox('https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&h=1080&w=1920', 'Heavy Deadlift Coaching')">
+      <img src="https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Barbell Training">
+      <div class="gallery-overlay"><h4>Barbell Training</h4></div>
+    </div>
+    <div class="gallery-item" data-cat="facility" onclick="openLightbox('https://images.pexels.com/photos/4716814/pexels-photo-4716814.jpeg?auto=compress&cs=tinysrgb&h=1080&w=1920', 'Dumbbell Zone')">
+      <img src="https://images.pexels.com/photos/4716814/pexels-photo-4716814.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Dumbbell Rack">
+      <div class="gallery-overlay"><h4>Dumbbell Rack</h4></div>
+    </div>
+    <div class="gallery-item" data-cat="transform" onclick="openLightbox('https://images.pexels.com/photos/5699252/pexels-photo-5699252.jpeg?auto=compress&cs=tinysrgb&h=1080&w=1920', '12-Week Transformation Progress')">
+      <img src="https://images.pexels.com/photos/5699252/pexels-photo-5699252.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Member Transformation">
+      <div class="gallery-overlay"><h4>Member Transformation</h4></div>
+    </div>
+    <div class="gallery-item" data-cat="action" onclick="openLightbox('https://images.pexels.com/photos/38882512/pexels-photo-38882512.jpeg?auto=compress&cs=tinysrgb&h=1080&w=1920', 'Spin Cycle Sprint Session')">
+      <img src="https://images.pexels.com/photos/38882512/pexels-photo-38882512.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Spin Cycle">
+      <div class="gallery-overlay"><h4>Spin Studio</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img src="" alt="Full view" id="lightboxImg" class="lightbox-content">
+</div>
+
+<section id="testimonials">
+  <div class="section-header">
+    <h2>Member Success Stories</h2>
+    <p>Hear how our dedicated environment has helped members achieve life-changing results.</p>
+  </div>
+
+  <div class="testimonials-box">
+    <div class="testimonial active">
+      <img src="https://images.pexels.com/photos/5699252/pexels-photo-5699252.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Sofia Martinez">
+      <p>"FitForge changed my entire approach to training. In just 3 months, I lost 15 lbs and gained incredible functional strength!"</p>
+      <h4>— Sofia Martinez</h4>
+    </div>
+    <div class="testimonial">
+      <img src="https://images.pexels.com/photos/13018370/pexels-photo-13018370.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Derek Liu">
+      <p>"The coaching and community accountability here are second to none. The HIIT sessions are addictive and brutal in the best way!"</p>
+      <h4>— Derek Liu</h4>
+    </div>
+    <div class="testimonial">
+      <img src="https://images.pexels.com/photos/4534605/pexels-photo-4534605.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Emily O’Connor">
+      <p>"The Mobility and Yoga classes helped rehabilitate my shoulder injury. I'm now lifting heavier and pain-free!"</p>
+      <h4>— Emily O’Connor</h4>
+    </div>
+
+    <div class="testimonial-nav">
+      <button class="btn btn-secondary" id="prevTestimonial">Previous</button>
+      <button class="btn" id="nextTestimonial">Next Story</button>
+    </div>
+  </div>
+</section>
+
+<section id="booking_form">
+  <div class="section-header">
+    <h2>Book a Personal Training Session</h2>
+    <p>Reserve a 1-on-1 consultation and training slot with one of our master coaches.</p>
+  </div>
+
+  <div class="macro-calc-box">
+    <form id="sessionForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="bookName">Full Name</label>
+          <input type="text" id="bookName" name="name" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label for="bookEmail">Email Address</label>
+          <input type="email" id="bookEmail" name="email" required placeholder="john@example.com">
+        </div>
+        <div class="form-group">
+          <label for="bookTrainer">Select Trainer</label>
+          <select id="bookTrainer" name="trainer" required>
+            <option value="">Choose Coach...</option>
+            <option value="Alex Rivera">Alex Rivera (Strength)</option>
+            <option value="Maya Patel">Maya Patel (Yoga/Mobility)</option>
+            <option value="Jamal Thompson">Jamal Thompson (HIIT)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="bookDate">Preferred Date</label>
+          <input type="date" id="bookDate" name="date" required>
+        </div>
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label for="bookTime">Preferred Time Slot</label>
+          <input type="time" id="bookTime" name="time" required>
+        </div>
+      </div>
+      <button type="submit" class="btn" style="width:100%;">Confirm Booking Request</button>
+    </form>
+    <div id="bookingMessage" style="display:none; margin-top:1rem; padding:1rem; background:rgba(255,102,0,0.15); border:1px solid var(--accent); border-radius:6px; text-align:center;"></div>
+  </div>
+</section>
+
+<section id="contact_info">
+  <div class="section-header">
+    <h2>Get in Touch & Location</h2>
+    <p>Drop by our facility, give us a call, or send us a quick message anytime.</p>
+  </div>
+
+  <div class="contact-container">
+    <div class="map-card">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.83543450937!2d144.9537353153167!3d-37.81627977975171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d4c2b349649%3A0xb6899234e561db11!2sEnvato!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy" title="Gym Location Map"></iframe>
+      <div class="contact-details">
+        <h3>FitForge Gym Flagship</h3>
+        <p><strong>Address:</strong> 123 Fitness Boulevard, Downtown Center</p>
+        <p><strong>Phone:</strong> (555) 839-2019</p>
+        <p><strong>Email:</strong> support@fitforgegym.com</p>
+        <p><strong>Hours:</strong> Mon - Sun: 5:00 AM - 11:00 PM</p>
+      </div>
+    </div>
+
+    <div class="macro-calc-box" style="margin:0;">
+      <h3>Send Us a Message</h3>
+      <form id="contactForm" style="margin-top:1rem;">
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label for="contactName">Name</label>
+          <input type="text" id="contactName" name="name" required placeholder="Your Name">
+        </div>
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label for="contactEmail">Email</label>
+          <input type="email" id="contactEmail" name="email" required placeholder="your@email.com">
+        </div>
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label for="contactMessage">Message</label>
+          <textarea id="contactMessage" name="message" rows="4" required placeholder="How can we help you?"></textarea>
+        </div>
+        <button type="submit" class="btn" style="width:100%;">Send Message</button>
+      </form>
+      <div id="contactResponse" style="display:none; margin-top:1rem; padding:1rem; background:rgba(255,102,0,0.15); border:1px solid var(--accent); border-radius:6px; text-align:center;"></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq_accordion">
+  <div class="section-header">
+    <h2>Frequently Asked Questions</h2>
+    <p>Find quick answers regarding our membership policies, classes, and amenities.</p>
+  </div>
+
+  <div class="faq-accordion">
+    <div class="faq-item">
+      <button onclick="toggleFaq(this)">What are the membership pricing plans?</button>
+      <div class="faq-content">
+        Our memberships start at $29/month for basic gym floor access up to $99/month for VIP status which includes unlimited classes, guest passes, and monthly personal training sessions.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button onclick="toggleFaq(this)">Do you offer a free trial pass?</button>
+      <div class="faq-content">
+        Yes! We offer a complimentary 7-day all-access trial pass for first-time local visitors. Simply fill out our booking form or drop by the front desk.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button onclick="toggleFaq(this)">Can I cancel or pause my membership at any time?</button>
+      <div class="faq-content">
+        Absoloutely. We operate on month-to-month memberships with no long-term contracts. You can pause or cancel your plan through your online user dashboard with 7 days notice.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button onclick="toggleFaq(this)">Are personal training sessions included?</button>
+      <div class="faq-content">
+        VIP Elite members receive 1 monthly personal training session included. Additional 1-on-1 training sessions can be booked individually or in bundles.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="user_dashboard">
+  <div class="user-dashboard-card">
+    <div>
+      <h3 style="color:var(--neutral); margin-bottom:0.25rem;">Member Portal & Dashboard</h3>
+      <p style="color:var(--text-muted);">Track your active bookings, view trainer notes, and manage billing preferences.</p>
+    </div>
+    <a href="#booking_form" class="btn">Launch Dashboard</a>
+  </div>
+</section>
+
+<section id="statistics">
+  <div class="section-header">
+    <h2>Our Proven Impact</h2>
+    <p>Milestones achieved by our dedicated athlete community.</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number" data-target="3200" data-suffix="+">0</div>
+      <div class="stat-label">Active Members</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="120" data-suffix="">0</div>
+      <div class="stat-label">Classes / Week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="15" data-suffix="">0</div>
+      <div class="stat-label">Certified Coaches</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="7" data-suffix=" Yrs">0</div>
+      <div class="stat-label">Years of Excellence</div>
+    </div>
+  </div>
+</section>
+
+<div class="primary_cta" id="primary_cta">
+  <h2>Ready to Transform Your Fitness?</h2>
+  <p>Claim your 7-day free trial pass today and experience the FitForge difference.</p>
+  <a href="#booking_form" class="btn">Start Free Trial Now</a>
+</div>
+
+<footer>
+  <p>&copy; 2026 FitForge Gym. All rights reserved. Designed for Peak Performance.</p>
+</footer>
+
+<script>
+/* Navigation Menu Toggle */
+const navToggle = document.getElementById('navToggle');
+const navMenu = document.getElementById('navMenu');
+
+navToggle.addEventListener('click', () => {
+  navMenu.classList.toggle('active');
+});
+
+document.querySelectorAll('#navMenu a').forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('active');
+  });
+});
+
+/* Calendar Class Filtering */
+const filterBtns = document.querySelectorAll('.calendar-controls .filter-btn');
+const slotItems = document.querySelectorAll('.slot-item');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const filter = btn.getAttribute('data-filter');
+    slotItems.forEach(item => {
+      if (filter === 'all' || item.getAttribute('data-category') === filter) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+
+/* Calendar Slot Click -> Prefill Booking Form */
+function selectSlot(title, trainer, timeStr) {
+  const trainerSelect = document.getElementById('bookTrainer');
+  if (trainer.includes('Alex')) trainerSelect.value = 'Alex Rivera';
+  else if (trainer.includes('Maya')) trainerSelect.value = 'Maya Patel';
+  else if (trainer.includes('Jamal')) trainerSelect.value = 'Jamal Thompson';
+
+  document.getElementById('booking_form').scrollIntoView({ behavior: 'smooth' });
+  alert(`Selected: ${title} with ${trainer} (${timeStr}). Please complete your booking details below.`);
+}
+
+/* Macro Calculator */
+function calculateMacros(e) {
+  e.preventDefault();
+  const weight = parseFloat(document.getElementById('calcWeight').value);
+  const goal = document.getElementById('calcGoal').value;
+  const activity = parseFloat(document.getElementById('calcActivity').value);
+
+  let bmr = weight * 10 * activity;
+  if (goal === 'lose') bmr -= 400;
+  else if (goal === 'gain') bmr += 400;
+
+  const calories = Math.round(bmr);
+  const protein = Math.round(weight * 1.1);
+  const carbs = Math.round((calories * 0.45) / 4);
+
+  document.getElementById('resCalories').innerText = calories;
+  document.getElementById('resProtein').innerText = protein + 'g';
+  document.getElementById('resCarbs').innerText = carbs + 'g';
+  document.getElementById('macroResults').style.display = 'grid';
+}
+
+/* Gallery Filter */
+function filterGallery(category) {
+  const items = document.querySelectorAll('.gallery-item');
+  const buttons = document.querySelectorAll('.gallery-filters .filter-btn');
+  
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  items.forEach(item => {
+    if (category === 'all' || item.getAttribute('data-cat') === category) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+/* Lightbox Functions */
+function openLightbox(src, caption) {
+  const lightbox = document.getElementById('lightbox');
+  const img = document.getElementById('lightboxImg');
+  img.src = src;
+  lightbox.classList.add('active');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+
+/* Testimonials Navigation */
+let currentTestimonial = 0;
+const testimonials = document.querySelectorAll('.testimonial');
+
+function showTestimonial(index) {
+  testimonials.forEach(t => t.classList.remove('active'));
+  testimonials[index].classList.add('active');
+}
+
+document.getElementById('prevTestimonial').addEventListener('click', () => {
+  currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+  showTestimonial(currentTestimonial);
+});
+
+document.getElementById('nextTestimonial').addEventListener('click', () => {
+  currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+  showTestimonial(currentTestimonial);
+});
+
+/* FAQ Accordion Toggle */
+function toggleFaq(button) {
+  const content = button.nextElementSibling;
+  const isOpen = content.style.display === 'block';
+
+  document.querySelectorAll('.faq-content').forEach(c => c.style.display = 'none');
+  document.querySelectorAll('.faq-item button').forEach(b => b.classList.remove('active'));
+
+  if (!isOpen) {
+    content.style.display = 'block';
+    button.classList.add('active');
+  }
+}
+
+/* Scroll-Triggered Animated Stat Counters */
+let animatedStats = false;
+function animateCounters() {
+  const counters = document.querySelectorAll('.stat-number');
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-target'), 10);
+    const suffix = counter.getAttribute('data-suffix') || '';
+    let count = 0;
+    const step = Math.ceil(target / 40);
+
+    const update = () => {
+      count += step;
+      if (count < target) {
+        counter.innerText = count + suffix;
+        setTimeout(update, 30);
+      } else {
+        counter.innerText = target + suffix;
+      }
+    };
+    update();
+  });
+}
+
+window.addEventListener('scroll', () => {
+  const statsSection = document.getElementById('statistics');
+  if (statsSection && !animatedStats) {
+    const rect = statsSection.getBoundingClientRect();
+    if (rect.top <= window.innerHeight * 0.8) {
+      animatedStats = true;
+      animateCounters();
+    }
+  }
+});
+
+/* Webhook Contact Form Handler */
+const contactForm = document.getElementById('contactForm');
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = contactForm.querySelector('button');
+  const msg = document.getElementById('contactResponse');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const data = {
+    contact_email: 'prithvirajr211@gmail.com',
+    name: contactForm.querySelector('[name="name"]').value,
+    email: contactForm.querySelector('[name="email"]').value,
+    message: contactForm.querySelector('[name="message"]').value
+  };
+
+  try {
+    const res = await fetch('https://cymbal-quarterly-brush.ngrok-free.dev/webhook/contact-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      msg.textContent = 'Thanks! Your message has been sent. We will get back to you soon.';
+    } else {
+      msg.textContent = 'Error sending message. Please email prithvirajr211@gmail.com directly.';
+    }
+    msg.style.display = 'block';
+    contactForm.style.display = 'none';
+  } catch (err) {
+    msg.textContent = 'Error sending message. Please email prithvirajr211@gmail.com directly.';
+    msg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send Message';
+  }
+});
+
+/* Webhook Session Booking Form Handler */
+const sessionForm = document.getElementById('sessionForm');
+sessionForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = sessionForm.querySelector('button');
+  const msg = document.getElementById('bookingMessage');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const data = {
+    contact_email: 'prithvirajr211@gmail.com',
+    name: sessionForm.querySelector('[name="name"]').value,
+    email: sessionForm.querySelector('[name="email"]').value,
+    trainer: sessionForm.querySelector('[name="trainer"]').value,
+    date: sessionForm.querySelector('[name="date"]').value,
+    time: sessionForm.querySelector('[name="time"]').value
+  };
+
+  try {
+    const res = await fetch('https://cymbal-quarterly-brush.ngrok-free.dev/webhook/contact-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      msg.textContent = 'Thanks! Your personal training booking request has been confirmed.';
+    } else {
+      msg.textContent = 'Error sending request. Please email prithvirajr211@gmail.com directly.';
+    }
+    msg.style.display = 'block';
+    sessionForm.style.display = 'none';
+  } catch (err) {
+    msg.textContent = 'Error sending request. Please email prithvirajr211@gmail.com directly.';
+    msg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Confirm Booking Request';
+  }
+});
+
+/* Chart.js Dashboard Charts Initialization */
+let weightChart, workoutChart;
+
+window.addEventListener('load', () => {
+  // Chart 1: Weight Loss Progress
+  const ctx1 = document.getElementById('weightChart').getContext('2d');
+  weightChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: ['Wk 1', 'Wk 2', 'Wk 3', 'Wk 4', 'Wk 5', 'Wk 6'],
+      datasets: [{
+        label: 'Weight (lbs)',
+        data: [185, 183.5, 182, 180, 178.5, 177],
+        borderColor: '#ff6600',
+        backgroundColor: 'rgba(255, 102, 0, 0.15)',
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#94a3b8' }, grid: { color: '#2a2f3d' } },
+        y: { ticks: { color: '#94a3b8' }, grid: { color: '#2a2f3d' } }
+      }
+    }
+  });
+
+  // Chart 2: Weekly Workout Consistency
+  const ctx2 = document.getElementById('workoutChart').getContext('2d');
+  workoutChart = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'Sessions',
+        data: [1, 1, 0, 1, 1, 1, 0],
+        backgroundColor: '#ff6600',
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+        y: { ticks: { color: '#94a3b8', stepSize: 1 }, grid: { color: '#2a2f3d' } }
+      }
+    }
+  });
+});
+
+function addWeightLog() {
+  const input = document.getElementById('newWeightInput');
+  const val = parseFloat(input.value);
+  if (val && weightChart) {
+    const nextWk = 'Wk ' + (weightChart.data.labels.length + 1);
+    weightChart.data.labels.push(nextWk);
+    weightChart.data.datasets[0].data.push(val);
+    weightChart.update();
+    input.value = '';
+  }
+}
+
+function logSession() {
+  const input = document.getElementById('workoutNameInput');
+  if (input.value && workoutChart) {
+    alert(`Logged Session: "${input.value}" for Today! Keep crushing it!`);
+    workoutChart.data.datasets[0].data[5] += 1; // Increment current day
+    workoutChart.update();
+    input.value = '';
+  }
+}
+</script>
+</body>
+</html>
